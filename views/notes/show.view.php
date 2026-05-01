@@ -14,11 +14,22 @@ require base_path('views/partials/banner.php');
         </a>
 
         <p class="text-lg mt-2 mb-4"><?php echo htmlspecialchars((string) ($note['body'] ?? '')); ?></p>
-        <a href="/notes/delete?id=<?php echo urlencode((string) ($note['id'] ?? '')); ?>" class="py-2 px-4 bg-red-500 rounded-lg text-white hover:text-black">delete</a>
-    </div>
+        <div>
+            <p class="text-sm text-gray-500">Created at: <?php echo htmlspecialchars((string) ($note['created_at'] ?? '')); ?></p>
+            <p class="text-sm text-gray-500">Updated at: <?php echo htmlspecialchars((string) ($note['updated_at'] ?? '')); ?></p>
+        </div>
+        <div class="flex gap-2 mt-4">
 
-    <div class="mt-4 justify-end flex">
-        <a href="/notes/create" class="rounded-md bg-blue-600 px-4 py-2 text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Create Note</a>
+            <a href="/note/edit?id=<?php echo urlencode((string) ($note['id'] ?? '')); ?>" class="py-2 px-4 bg-green-500 rounded-lg text-white hover:text-black">edit</a>
+
+            <form method="POST"
+                onsubmit="return confirm('Are you sure you want to delete this note?');">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="id" value="<?= ($note['id']); ?>">
+                <button type="submit" class="py-2 px-4 bg-red-500 rounded-lg text-white hover:text-black">delete</button>
+            </form>
+        </div>
+
     </div>
 </div>
 
